@@ -9,7 +9,8 @@ public record CreateProductCommand(string Name, List<string> Category, string De
 public record CreateProductResult(Guid Id);
 
 
-internal sealed class CreateProductHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal sealed class CreateProductHandler(IDocumentSession session) 
+    : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
@@ -22,6 +23,9 @@ internal sealed class CreateProductHandler : ICommandHandler<CreateProductComman
             Price = command.Price
         };
 
-        return new CreateProductResult(Guid.NewGuid());
+        session.Store(product);
+        await session.SaveChangesAsync(cancellationToken);   
+
+        return new CreateProductResult(product.Id);
     }
 }
