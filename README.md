@@ -7,6 +7,8 @@ For each microservice will have its own architecture and its own database type. 
 Implementing interaction between services via RabbitMQ message broker and using the Yarp API Gateway.
 
 ### Application Diagram
+![EcommerceShop (Microservices)](https://github.com/user-attachments/assets/4a4138a6-8baa-44d9-9cef-b04e4540aaab)
+
 
 
 
