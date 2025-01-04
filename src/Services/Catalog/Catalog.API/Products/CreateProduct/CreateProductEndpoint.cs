@@ -4,18 +4,18 @@
 public record CreateProductRequest(string Name, List<string> Category, string Description, string ImageFile, decimal Price);
 public record CreateProductResponse(Guid Id);
 
-public sealed class CreateProductEndpoint : ICarterModule
+public class CreateProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/products",
-            async (CreateProductRequest request, ISender sender) =>
+        app.MapPost("/create-product",
+            async (CreateProductRequest request, ISender sender, CancellationToken token) =>
             {
                 var command = request.Adapt<CreateProductCommand>();
-                var result = await sender.Send(command);
+                var result = await sender.Send(command, token);
                 var response = result.Adapt<CreateProductResponse>();
 
-                return Results.Created($"/products/{response.Id}", response);
+                return Results.Created($"/create-product/{response.Id}", response);
             })
             .WithName("CreateProduct")
             .Produces<CreateProductResponse>(StatusCodes.Status201Created)
