@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  catalog_db:
+    container_name: eshop_catalog_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: EShop_Catalog
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_catalog:/var/lib/postgresql/data/ 
+  pgadmin:
+    container_name: pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    restart: always
+    ports:
+      - "8080:80"
+
+      
