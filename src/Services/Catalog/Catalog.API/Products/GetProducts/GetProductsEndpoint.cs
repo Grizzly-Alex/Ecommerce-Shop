@@ -2,7 +2,7 @@
 
 public record GetProductsResponse(IEnumerable<Product> Products);
 
-public class GetProductsEndpoint : ICarterModule
+public class GetProductsdEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
