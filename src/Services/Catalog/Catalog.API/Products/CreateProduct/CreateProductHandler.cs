@@ -10,7 +10,7 @@ public record CreateProductResult(Guid Id);
 
 internal class CreateProductHandler(
     IDocumentSession session,
-    ILogger<UpdateProductHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
+    ILogger<DeleteProductHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
