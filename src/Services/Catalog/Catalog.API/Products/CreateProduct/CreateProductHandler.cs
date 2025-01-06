@@ -1,4 +1,6 @@
-﻿namespace Catalog.API.Products.CreateProduct;
+﻿using Catalog.API.Products.UpdateProduct;
+
+namespace Catalog.API.Products.CreateProduct;
 
 
 public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price) 
@@ -6,10 +8,14 @@ public record CreateProductCommand(string Name, List<string> Category, string De
 public record CreateProductResult(Guid Id);
 
 
-internal class CreateProductHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal class CreateProductHandler(
+    IDocumentSession session,
+    ILogger<UpdateProductHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
+        logger.LogInformation($"Create new product");
+
         var product = new Product
         {
             Name = command.Name,
