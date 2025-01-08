@@ -1,11 +1,7 @@
-﻿using BuildingBlocks.CQRS;
-using FluentValidation;
-using MediatR;
-
-namespace BuildingBlocks.Behaviors;
+﻿namespace BuildingBlocks.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : ICommand<IRequest>
+    where TRequest : ICommand<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 

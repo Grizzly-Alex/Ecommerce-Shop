@@ -8,16 +8,11 @@ public record CreateProductResult(Guid Id);
 
 internal class CreateProductCommandHandler(
     IDocumentSession session,
-    IValidator<CreateProductCommand> validator,
     ILogger<DeleteProductCommandHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         logger.LogInformation($"Create new product");
-
-        var result = await validator.ValidateAsync(command, cancellationToken);
-        if (!result.IsValid)
-            throw new ValidationException(result.Errors);
         
         var product = new Product
         {

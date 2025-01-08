@@ -8,4 +8,5 @@ global using Marten;
 global using FluentValidation;
 global using Catalog.API.Exceptions;
 global using Catalog.API.Endpoints;
+global using BuildingBlocks.Behaviors;
 
