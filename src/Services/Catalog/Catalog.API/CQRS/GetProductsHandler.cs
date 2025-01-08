@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Products.GetProducts;
+﻿namespace Catalog.API.CQRS;
 
 
 public record GetProductsQuery() : IQuery<GetProductsResult>;

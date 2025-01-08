@@ -1,6 +1,4 @@
-﻿using Catalog.API.Exceptions;
-
-namespace Catalog.API.Products.GetProductById;
+﻿namespace Catalog.API.CQRS;
 
 
 public record GetProductByIdQuery(Guid Id) : IQuery<GetProductByIdResult>;

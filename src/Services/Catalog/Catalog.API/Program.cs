@@ -1,3 +1,5 @@
+using FluentValidation;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -12,8 +14,9 @@ builder.Services.AddCarter();
 builder.Services.AddMarten(opt =>
     {
         opt.Connection(builder.Configuration.GetConnectionString("LocalDb")!);
-    })
-    .UseLightweightSessions();
+    }).UseLightweightSessions();
+
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 #endregion
 
 var app = builder.Build();

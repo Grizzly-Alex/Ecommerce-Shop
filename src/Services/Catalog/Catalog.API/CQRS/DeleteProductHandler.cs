@@ -1,7 +1,5 @@
-﻿using Catalog.API.Exceptions;
+﻿namespace Catalog.API.CQRS;
 
-
-namespace Catalog.API.Products.UpdateProduct;
 
 public record DeleteProductCommand(Guid Id) : ICommand<DeleteProductResult>;
 public record DeleteProductResult(bool IsSuccess);

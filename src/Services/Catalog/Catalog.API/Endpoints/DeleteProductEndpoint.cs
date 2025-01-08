@@ -1,6 +1,4 @@
-﻿using Catalog.API.Products.CreateProduct;
-
-namespace Catalog.API.Products.UpdateProduct;
+﻿namespace Catalog.API.Endpoints;
 
 public record DeleteProductResponse(bool isSuccess);
 

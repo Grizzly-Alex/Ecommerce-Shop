@@ -1,21 +1,24 @@
-﻿using Catalog.API.Products.UpdateProduct;
-
-namespace Catalog.API.Products.CreateProduct;
+﻿namespace Catalog.API.CQRS;
 
 
-public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price) 
+public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price)
     : ICommand<CreateProductResult>;
 public record CreateProductResult(Guid Id);
 
 
 internal class CreateProductHandler(
     IDocumentSession session,
+    IValidator<CreateProductCommand> validator,
     ILogger<DeleteProductHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         logger.LogInformation($"Create new product");
 
+        var result = await validator.ValidateAsync(command, cancellationToken);
+        if (!result.IsValid)
+            throw new ValidationException(result.Errors);
+        
         var product = new Product
         {
             Name = command.Name,
@@ -26,7 +29,7 @@ internal class CreateProductHandler(
         };
 
         session.Store(product);
-        await session.SaveChangesAsync(cancellationToken);   
+        await session.SaveChangesAsync(cancellationToken);
 
         return new CreateProductResult(product.Id);
     }

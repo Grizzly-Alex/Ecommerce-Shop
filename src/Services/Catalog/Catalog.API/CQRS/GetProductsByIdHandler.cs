@@ -1,6 +1,4 @@
-﻿using Catalog.API.Exceptions;
-
-namespace Catalog.API.Products.GetProductByCategory;
+﻿namespace Catalog.API.CQRS;
 
 
 public record GetProductsByCategoryQuery(string Category) : IQuery<GetProductsByCategoryResult>;

@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Products.GetProducts;
+﻿namespace Catalog.API.Endpoints;
 
 public record GetProductsResponse(IEnumerable<Product> Products);
 
