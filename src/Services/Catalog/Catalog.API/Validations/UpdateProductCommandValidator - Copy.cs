@@ -1,9 +1,10 @@
 ﻿namespace Catalog.API.Validations;
 
-public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
 {
-    public CreateProductCommandValidator()
+    public UpdateProductCommandValidator()
     {
+        RuleFor(i => i.Id).NotEmpty().WithMessage("Is required");
         RuleFor(i => i.Name)
             .NotEmpty().WithMessage("Is required")
             .Length(2, 100).WithMessage("must be between 2 and 100 characters");
