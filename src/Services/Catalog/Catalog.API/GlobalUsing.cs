@@ -10,4 +10,5 @@ global using Catalog.API.Exceptions;
 global using Catalog.API.Endpoints;
 global using BuildingBlocks.Behaviors;
 global using BuildingBlocks.Exceptions;
+global using BuildingBlocks.Exceptions.Handler;
 
