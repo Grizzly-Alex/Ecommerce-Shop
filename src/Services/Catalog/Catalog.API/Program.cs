@@ -1,4 +1,4 @@
-using FluentValidation;
+using BuildingBlocks.Behaviors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMediatR(cfg => 
     {
         cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+        cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
     });
 
 builder.Services.AddCarter();

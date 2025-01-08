@@ -6,10 +6,10 @@ public record CreateProductCommand(string Name, List<string> Category, string De
 public record CreateProductResult(Guid Id);
 
 
-internal class CreateProductHandler(
+internal class CreateProductCommandHandler(
     IDocumentSession session,
     IValidator<CreateProductCommand> validator,
-    ILogger<DeleteProductHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
+    ILogger<DeleteProductCommandHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
