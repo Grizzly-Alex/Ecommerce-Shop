@@ -15,7 +15,7 @@ internal class UpdateProductCommandHandler(
         logger.LogInformation($"Update product with id: {command.Id}");
 
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken)
-            ?? throw new ProductNotFoundException();
+            ?? throw new ProductNotFoundException(command.Id);
 
         product.Name = command.Name;
         product.Category = command.Category;

@@ -12,11 +12,11 @@ internal class GetProductsByCategoryHandler(
     {
         logger.LogInformation($"Get product by category: {query.Category}");
 
-        var product = await session.Query<Product>()
+        var products = await session.Query<Product>()
             .Where(i => i.Category.Contains(query.Category))
             .ToListAsync(cancellationToken)
-            ?? throw new ProductNotFoundException();
+            ?? throw new ProductNotFoundException(query.Category);
 
-        return new GetProductsByCategoryResult(product);
+        return new GetProductsByCategoryResult(products);
     }
 }

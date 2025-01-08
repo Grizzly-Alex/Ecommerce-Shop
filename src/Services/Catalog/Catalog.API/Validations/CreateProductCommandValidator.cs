@@ -1,5 +1,6 @@
 ﻿namespace Catalog.API.Validations;
 
+
 public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
 {
     public CreateProductCommandValidator()
