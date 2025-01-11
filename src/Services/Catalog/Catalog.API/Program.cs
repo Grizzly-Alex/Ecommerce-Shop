@@ -1,3 +1,5 @@
+using Catalog.API.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, configuration) =>
@@ -20,13 +22,18 @@ builder.Services.AddCarter();
 
 builder.Services.AddMarten(opt =>
     {
-        opt.Connection(builder.Configuration.GetConnectionString("LocalDb")!);
+        opt.Connection(builder.Configuration.GetConnectionString("Database")!);
     }).UseLightweightSessions();
 
 builder.Services
     .AddExceptionHandler<CustomExceptionHandler>()
     .AddProblemDetails();
 #endregion
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
+};
 
 var app = builder.Build();
 
