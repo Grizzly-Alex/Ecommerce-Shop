@@ -6,14 +6,11 @@ public record CreateProductCommand(string Name, List<string> Category, string De
 public record CreateProductResult(Guid Id);
 
 
-internal class CreateProductCommandHandler(
-    IDocumentSession session,
-    ILogger<DeleteProductCommandHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal class CreateProductCommandHandler(IDocumentSession session) 
+    : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
-    {
-        logger.LogInformation($"Create new product");
-        
+    {        
         var product = new Product
         {
             Name = command.Name,

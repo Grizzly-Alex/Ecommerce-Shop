@@ -10,11 +10,6 @@ public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger)
         logger.LogError($"Error Message: {exception.Message}, Time of occurence {DateTime.UtcNow} Utc.");
 
         var problemDetails = GetProblemDetails(context, exception);
-
-        problemDetails.Extensions.Add("traceId", context.TraceIdentifier);
-
-        if (exception is ValidationException validationException)
-            problemDetails.Extensions.Add("ValidationErrors", validationException.Errors);
         
         await context.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
 
@@ -23,21 +18,22 @@ public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger)
 
     private ProblemDetails GetProblemDetails(HttpContext context, Exception exception)
     {
-        (string detail, string title, int status) = exception switch
+        var problemDetails = new ProblemDetails();
+
+        problemDetails.Instance = context.Request.Path;
+        problemDetails.Extensions.Add("traceId", context.TraceIdentifier);
+        if (exception is ValidationException validationException)
+            problemDetails.Extensions.Add("ValidationErrors", validationException.Errors);
+
+        (problemDetails.Detail, problemDetails.Title, problemDetails.Status) = exception switch
         {
             InternalServerException => (exception.Message, exception.GetType().Name, StatusCodes.Status500InternalServerError),
-            ValidationException => (exception.Message, exception.GetType().Name, StatusCodes.Status400BadRequest),
+            ValidationException => (exception.Message, exception.GetType().Name, StatusCodes.Status422UnprocessableEntity),
             BadRequestException => (exception.Message, exception.GetType().Name, StatusCodes.Status400BadRequest),
             NotFoundException => (exception.Message, exception.GetType().Name, StatusCodes.Status404NotFound),
             _ => (exception.Message, exception.GetType().Name, StatusCodes.Status500InternalServerError)
         };
 
-        return new ProblemDetails
-        {
-            Detail = detail,
-            Title = title,
-            Status = status,
-            Instance = context.Request.Path
-        };
+        return problemDetails;
     } 
 }
