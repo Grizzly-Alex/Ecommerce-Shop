@@ -11,7 +11,7 @@ namespace Catalog.API.Data
             if (await session.Query<Product>().AnyAsync(cancellation))
                 return;
 
-            session.Store<Product>(GetProducts());
+            session.Store(GetProducts());
             await session.SaveChangesAsync(cancellation);
         }
 
