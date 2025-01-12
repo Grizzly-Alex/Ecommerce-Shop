@@ -1,13 +1,19 @@
-using Catalog.API.Data;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
+var assembly = typeof(Program).Assembly;
+var dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
+
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
 
 #region DI Container
-var assembly = typeof(Program).Assembly;
+builder.Services
+    .AddExceptionHandler<CustomExceptionHandler>()
+    .AddProblemDetails();
 
 builder.Services.AddMediatR(cfg => 
     {
@@ -22,12 +28,11 @@ builder.Services.AddCarter();
 
 builder.Services.AddMarten(opt =>
     {
-        opt.Connection(builder.Configuration.GetConnectionString("Database")!);
+        opt.Connection(dbConnectionString);
     }).UseLightweightSessions();
 
-builder.Services
-    .AddExceptionHandler<CustomExceptionHandler>()
-    .AddProblemDetails();
+builder.Services.AddHealthChecks()
+    .AddNpgSql(dbConnectionString);
 #endregion
 
 if (builder.Environment.IsDevelopment())
@@ -41,5 +46,10 @@ app.UseExceptionHandler();
 
 app.MapCarter();
 
+app.UseHealthChecks("/health",
+    new HealthCheckOptions()
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
 app.Run();
