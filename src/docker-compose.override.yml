@@ -1,24 +1,42 @@
 version: '3.4'
 
 services:
-  catalog_db:
-    container_name: eshop_catalog_db
+
+  catalog.database:
+    container_name: catalog.database
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: EShop_Catalog
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=eshop_catalog
     restart: always
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
-      - postgres_catalog:/var/lib/postgresql/data/ 
+      - ./.containers/catalog-db:/var/lib/postgresql/data
+
   pgadmin:
     container_name: pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: root
+      - PGADMIN_DEFAULT_EMAIL=admin@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=root
     restart: always
     ports:
-      - "8080:80"
-
-      
+      - "5442:80"
+    depends_on:
+      - catalog.database
+     
+  catalog.api:
+    container_name: catalog.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings__Database=Server=catalog.database;Port=5432;Database=eshop_catalog;User Id=postgres;Password=postgres;Include Error Detail=true
+    ports:
+      - "6000:8080"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      - catalog.database
+  
