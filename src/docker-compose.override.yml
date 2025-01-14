@@ -11,7 +11,7 @@ services:
       - POSTGRES_DB=eshop_catalog
     restart: always
     ports:
-      - "5432:5432"
+      - "5400:5432"
     volumes:
       - ./.containers/catalog-db:/var/lib/postgresql/data
 
@@ -22,7 +22,7 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     restart: always
     ports:
-      - "5442:80"
+      - "5450:80"
     depends_on:
       - catalog.database
      

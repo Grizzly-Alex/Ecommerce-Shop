@@ -8,14 +8,14 @@ public class CreateProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/create-product",
+        app.MapPost("/products",
             async (CreateProductRequest request, ISender sender, CancellationToken token) =>
             {
                 var command = request.Adapt<CreateProductCommand>();
                 var result = await sender.Send(command, token);
                 var response = result.Adapt<CreateProductResponse>();
 
-                return Results.Created($"/create-product/{response.Id}", response);
+                return Results.Created($"/products/{response.Id}", response);
             })
             .WithName("CreateProduct")
             .Produces<CreateProductResponse>(StatusCodes.Status201Created)

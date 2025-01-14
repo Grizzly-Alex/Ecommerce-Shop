@@ -1,6 +1,5 @@
-﻿using Catalog.API.CQRS;
+﻿namespace Catalog.API.Endpoints;
 
-namespace Catalog.API.Endpoints;
 
 public record UpdateProductRequest(Guid Id, string Name, List<string> Category, string Description, string ImageFile, decimal Price);
 public record UpdateProductResponse(bool isSuccess);
@@ -9,7 +8,7 @@ public class UpdateProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPut("/update-product", async (UpdateProductRequest request, ISender sender, CancellationToken token) =>
+        app.MapPut("/products", async (UpdateProductRequest request, ISender sender, CancellationToken token) =>
         {
             var command = request.Adapt<UpdateProductCommand>();
             var result = await sender.Send(command, token);

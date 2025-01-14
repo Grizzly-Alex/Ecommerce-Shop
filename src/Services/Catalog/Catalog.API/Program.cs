@@ -1,6 +1,3 @@
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
 var dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
@@ -24,6 +21,23 @@ builder.Services.AddMediatR(cfg =>
 
 builder.Services.AddValidatorsFromAssembly(assembly);
 
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Catalog API",
+        Description = "ASP.NET Core 8 Web API for managing products data, supporting CRUD operations and health check",
+        Contact = new OpenApiContact
+        {
+            Name = "Alexander Medved",
+            Url = new Uri("https://github.com/Grizzly-Alex")
+        }
+    });
+});
+
 builder.Services.AddCarter();
 
 builder.Services.AddMarten(opt =>
@@ -35,14 +49,24 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(dbConnectionString);
 #endregion
 
+
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.InitializeMartenWith<CatalogInitialData>();
 };
 
+
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseExceptionHandler();
+
+app.UseHttpsRedirection();
 
 app.MapCarter();
 
