@@ -16,16 +16,17 @@ Implementing interaction between services via RabbitMQ message broker and using 
 This service is responsible for management products which store in the database.
 These are the ordinary CRUD operations.
 
-| Method  | Request URI       | Description                   |
-| :-------|:------------------| :-----------------------------|
-| GET     | /health           | Checking API availability     |
-| GET     | /products         | Get all products              |
-| GET     | /products/{id}    | Get a product by Id           |
-| GET     | products/category | Get some products by category |
-| POST    | products          | Create a product              |
-| PUT     | products/{id}     | Update a product              |
-| DELETE  | products/{id}     | Remove a product              |
+| Method  | Request URI                  | Description                   |
+| :-------|:-----------------------------| :-----------------------------|
+| GET     | /health                      | Checking API availability     |
+| GET     | /products                    | Get all products              |
+| GET     | /products/{id}               | Get a product by Id           |
+| GET     | /products/category/{example} | Get some products by category |
+| POST    | /products                    | Create a product              |
+| PUT     | /products/{id}               | Update a product              |
+| DELETE  | /products/{id}               | Remove a product              |
 
+Example requests are provided in two environments: docker and localhost. [Postman requests](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/feature/catalog.api/src/Services/Catalog/Postman)
 
 Microservice has got Vertical Slice Architecture with CQRS patern. 
 To implementation the CQRS pattern I used a MediatR. This ensures a low coupling to the endpoints api.
@@ -33,6 +34,3 @@ Low code coupling is also ensured by using the IPipelineBehavior generic interfa
 
 The [PostgreSQL](https://www.postgresql.org/) database was chosen for storing product data and for interect with it was chosen [Marten](https://martendb.io "site Marten") ORM.
 Marten transforms PostgreSQL into a .NET Transactional Document DB. This is made possible by the unique [JSONB](https://www.postgresql.org/docs/current/datatype-json.html) support first introduced in Postgresql 9.4.
-
-
-
