@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.CQRS;
+﻿namespace Catalog.API.ProductHandlers;
 
 
 public record GetProductByIdQuery(Guid Id) : IQuery<GetProductByIdResult>;

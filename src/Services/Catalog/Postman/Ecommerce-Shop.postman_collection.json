@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "a3c4ab7b-45ae-4d99-9b07-073d807fc072",
+		"name": "Ecommerce-Shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24639029"
+	},
+	"item": [
+		{
+			"name": "Catalog",
+			"item": [
+				{
+					"name": "create product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"test name\",\r\n    \"Category\": [\"cat_1\", \"cat_2\"],\r\n    \"Description\": \"test description\",\r\n    \"ImageFile\": \"test image file\",\r\n    \"Price\": 666\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{catalog_url}}/products"
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": \"019463d8-0fcb-4115-a022-8e3372d36158\",\r\n    \"Name\": \"test update name\",\r\n    \"Category\": [\"cat_1\"],\r\n    \"Description\": \"test update description\",\r\n    \"ImageFile\": \"test update image file\",\r\n    \"Price\": 777\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{catalog_url}}/products"
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{catalog_url}}/products/00000000-0000-0000-0000-000000000000"
+					},
+					"response": []
+				},
+				{
+					"name": "get products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{catalog_url}}/products"
+					},
+					"response": []
+				},
+				{
+					"name": "get product by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{catalog_url}}/products/4b6ca8a6-da2a-4f9b-bba6-83c5c3f005bd"
+					},
+					"response": []
+				},
+				{
+					"name": "get page products",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{catalog_url}}/products?pageNumber=1&pageSize=2",
+							"host": [
+								"{{catalog_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "health check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{catalog_url}}/health"
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD operations for Catalog API"
+		}
+	]
+}

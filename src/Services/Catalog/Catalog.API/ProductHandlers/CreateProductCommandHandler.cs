@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.CQRS;
+﻿namespace Catalog.API.ProductHandlers;
 
 
 public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price)
