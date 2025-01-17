@@ -73,6 +73,15 @@
 					"response": []
 				},
 				{
+					"name": "get product by category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{catalog_url}}/products/category/guitar"
+					},
+					"response": []
+				},
+				{
 					"name": "get page products",
 					"request": {
 						"auth": {
