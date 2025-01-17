@@ -10,5 +10,19 @@ Implementing interaction between services via RabbitMQ message broker and using 
 ![EcommerceShop (Microservices)](https://github.com/user-attachments/assets/4a4138a6-8baa-44d9-9cef-b04e4540aaab)
 
 
+## Catalog Microservice
 
+### Description
+This service is responsible for management products which store in the database.
+These are the ordinary CRUD operations: 
+ - update
+ - delete
+ - create
+ - get all products with paged list
+ - get by id
+ - get by category
+
+Microservice has got Vertical Slice Architecture with CQRS patern. 
+To implementation the CQRS pattern I used a MediatR. This ensures a low coupling to the endpoints api.
+Low code coupling is also ensured by using the IPipelineBehavior generic interface for validations and logging.
 
