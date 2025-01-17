@@ -14,16 +14,18 @@ Implementing interaction between services via RabbitMQ message broker and using 
 
 ### Description
 This service is responsible for management products which store in the database.
-These are the ordinary CRUD operations
+These are the ordinary CRUD operations.
 
-| Method  | Request URI       | Description              |
-| :-------|:------------------| :------------------------|
-| GET     | /products         | Get all products         |
-| GET     | /products/{id}    | Get product by Id        |
-| GET     | products/category | Get products by category |
-| POST    | products          | Create product           |
-| PUT     | products/{id}     | Update product           |
-| DELETE  | products/{id}     | Remove product           |
+| Method  | Request URI       | Description                   |
+| :-------|:------------------| :-----------------------------|
+| GET     | /health           | Checking API availability     |
+| GET     | /products         | Get all products              |
+| GET     | /products/{id}    | Get a product by Id           |
+| GET     | products/category | Get some products by category |
+| POST    | products          | Create a product              |
+| PUT     | products/{id}     | Update a product              |
+| DELETE  | products/{id}     | Remove a product              |
+
 
 Microservice has got Vertical Slice Architecture with CQRS patern. 
 To implementation the CQRS pattern I used a MediatR. This ensures a low coupling to the endpoints api.
