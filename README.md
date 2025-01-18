@@ -60,7 +60,7 @@ Marten transforms PostgreSQL into a .NET Transactional Document DB. This is made
 
 ### Request scheme
 
-![image](https://github.com/user-attachments/assets/ca4d54f8-231e-4399-a384-12ef4498cbde)
+![image](https://github.com/user-attachments/assets/275aa4b1-71e1-4ea5-a8b8-383088ca2013)
 
 ### Log:
 ![image](https://github.com/user-attachments/assets/f3f7e6c7-c5c9-44de-9d99-356cce2b4cf0)
