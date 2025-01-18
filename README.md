@@ -24,10 +24,10 @@ This service is responsible for management products which store in the database.
 These are the ordinary CRUD operations. Microservice works on http/https protocols with using REST architecture.
 
 ### Ports
-| Microservices | Local Environment  | Docker Environment  | Docker Inside  |
-| :-------------|:------------------:| :------------------:|:--------------:|
-| API           | 5000 - 5050        | 6000                | 8080 - 8081    |
-| Database      |                    | 5400                | 5432           |
+| Services | Local Environment  | Docker Environment  | Docker Inside  |
+| :--------|:------------------:| :------------------:|:--------------:|
+| API      | 5000 - 5050        | 6000                | 8080 - 8081    |
+| Database |                    | 5400                | 5432           |
 
 ### Requests 
 [postman export](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/feature/catalog.api/src/Services/Catalog/Postman)
