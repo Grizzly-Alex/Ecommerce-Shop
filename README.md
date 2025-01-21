@@ -1,7 +1,6 @@
 # Ecommerce Shop (client-server application based on microservice architecture)
 
 ### Description
-
 Developing a project using the .NET 8 and ASP.NET Core framework. The application has a microservice architecture.
 Why did I choose microservices for my project? Firstly, for educational purposes, and secondly, such architecture will allow me to easily expand the functionality of the application.
 For each microservice will have its own architecture and its own database type. The services will use databases such as relational databases (PostgreSQL, Sql Server) and NoSQL(Redis, DocumentDb).
@@ -19,7 +18,6 @@ Implementing interaction between services via RabbitMQ message broker and using 
 ![EcommerceShop (Microservices)](https://github.com/user-attachments/assets/4a4138a6-8baa-44d9-9cef-b04e4540aaab)
 
 # Catalog Microservice
-
 This service is responsible for management products which store in the database. 
 These are the ordinary CRUD operations. Microservice works on http/https protocols with using REST architecture.
 
@@ -53,22 +51,21 @@ https://localhost:5050/swagger/index.html
 
 
 ### Architecture
+API has got Vertical Slice Architecture. Organizes our code into feature folders, each feature encapsulated in a single .cs file.
 
-Microservice has got Vertical Slice Architecture. Organizes our code into feature folders, each feature encapsulated in a single .cs file.
-For more cleaner code I used a CQRS pattern.
-To implementation this pattern I used a MediatR [nuget](https://www.nuget.org/packages/mediatr/ "MediatR nuget package"). This provides low coupling with the endpoints and allows you to write cleaner, more understandable code.
-Low code coupling is also ensured by using the IPipelineBehavior generic interface for validations and logging. 
+![image](https://github.com/user-attachments/assets/5a5ebbc2-1123-456e-81cf-baae8493e653) ![image](https://github.com/user-attachments/assets/3ab5b377-8f60-4151-9c7b-8370f7a650ff)
 
-![image](https://github.com/user-attachments/assets/5a5ebbc2-1123-456e-81cf-baae8493e653)
 
 
 ### Underlying Data Structures
-
 The [PostgreSQL](https://www.postgresql.org/) database was chosen to store product data and the [Marten](https://martendb.io "site Marten") ORM was chosen to interact with it.
 Marten transforms PostgreSQL into a .NET Transactional Document DB. This is made possible by the unique [JSONB](https://www.postgresql.org/docs/current/datatype-json.html) support first introduced in Postgresql 9.4.
 This solution combines the flexibility of a document database with the reliability of a PostgreSQL relational database.
 
-### Request Scheme
+### CQRS
+For more cleaner code I used a CQRS pattern.
+To implementation this pattern I used a MediatR [nuget](https://www.nuget.org/packages/mediatr/ "MediatR nuget package"). This provides low coupling with the endpoints and allows you to write cleaner, more understandable code.
+Low code coupling is also ensured by using the IPipelineBehavior generic interface for validations and logging. 
 
 ![image](https://github.com/user-attachments/assets/275aa4b1-71e1-4ea5-a8b8-383088ca2013)
 
