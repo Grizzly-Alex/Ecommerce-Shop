@@ -52,16 +52,28 @@ https://localhost:5050/swagger/index.html
 ![image](https://github.com/user-attachments/assets/ff9d0a80-1a8c-479a-8b40-31cacdd0bd56)
 
 
-Microservice has got Vertical Slice Architecture with CQRS patern.
-To implementation the CQRS pattern I used a MediatR [nuget](https://www.nuget.org/packages/mediatr/ "MediatR nuget package"). This provides low coupling with the endpoints and allows you to write cleaner, more understandable code.
+### Architecture
+
+Microservice has got Vertical Slice Architecture. Organizes our code into feature folders, each feature encapsulated in a single .cs file.
+For more cleaner code I used a CQRS pattern.
+To implementation this pattern I used a MediatR [nuget](https://www.nuget.org/packages/mediatr/ "MediatR nuget package"). This provides low coupling with the endpoints and allows you to write cleaner, more understandable code.
 Low code coupling is also ensured by using the IPipelineBehavior generic interface for validations and logging. 
+
+![image](https://github.com/user-attachments/assets/5a5ebbc2-1123-456e-81cf-baae8493e653)
+
+
+### Underlying Data Structures
+
 The [PostgreSQL](https://www.postgresql.org/) database was chosen to store product data and the [Marten](https://martendb.io "site Marten") ORM was chosen to interact with it.
 Marten transforms PostgreSQL into a .NET Transactional Document DB. This is made possible by the unique [JSONB](https://www.postgresql.org/docs/current/datatype-json.html) support first introduced in Postgresql 9.4.
+This solution combines the flexibility of a document database with the reliability of a PostgreSQL relational database.
 
-### Request scheme
+### Request Scheme
 
 ![image](https://github.com/user-attachments/assets/275aa4b1-71e1-4ea5-a8b8-383088ca2013)
 
 ### Log:
 ![image](https://github.com/user-attachments/assets/f3f7e6c7-c5c9-44de-9d99-356cce2b4cf0)
+
+
 
