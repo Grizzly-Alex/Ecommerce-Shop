@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Endpoints;
+﻿namespace Catalog.API.Products.DeleteProduct;
 
 
 public record DeleteProductResponse(bool isSuccess);
@@ -15,10 +15,10 @@ public class DeleteProductEndpoint : ICarterModule
             return Results.Ok(response);
         })
         .WithName("DeleteProduct")
-        .Produces<CreateProductResponse>(StatusCodes.Status200OK)
+        .Produces<DeleteProductResponse>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
         .WithSummary("Delete Product")
-        .WithDescription("Delete Product"); ;
+        .WithDescription("Delete Product");
     }
 }

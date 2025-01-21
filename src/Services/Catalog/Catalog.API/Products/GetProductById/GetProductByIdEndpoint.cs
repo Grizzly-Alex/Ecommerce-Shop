@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Endpoints;
+﻿namespace Catalog.API.Products.GetProductById;
 
 
 public record GetProductByIdResponse(Product Product);

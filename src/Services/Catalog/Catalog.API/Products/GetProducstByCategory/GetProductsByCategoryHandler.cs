@@ -1,10 +1,10 @@
-﻿namespace Catalog.API.ProductHandlers;
+﻿namespace Catalog.API.Products.GetProductsByCategory;
 
 
 public record GetProductsByCategoryQuery(string Category) : IQuery<GetProductsByCategoryResult>;
 public record GetProductsByCategoryResult(IEnumerable<Product> Products);
 
-internal class GetProductsByCategoryHandler(IDocumentSession session) 
+internal class GetProductsByCategoryHandler(IDocumentSession session)
     : IQueryHandler<GetProductsByCategoryQuery, GetProductsByCategoryResult>
 {
     public async Task<GetProductsByCategoryResult> Handle(GetProductsByCategoryQuery query, CancellationToken cancellationToken)

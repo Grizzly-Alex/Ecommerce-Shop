@@ -1,10 +1,20 @@
-﻿namespace Catalog.API.ProductHandlers;
+﻿namespace Catalog.API.Products.DeleteProduct;
 
 
 public record DeleteProductCommand(Guid Id) : ICommand<DeleteProductResult>;
 public record DeleteProductResult(bool IsSuccess);
 
-internal class DeleteProductCommandHandler(IDocumentSession session) 
+
+public class DeleteProductCommandValidator : AbstractValidator<DeleteProductCommand>
+{
+    public DeleteProductCommandValidator()
+    {
+        RuleFor(i => i.Id).NotEmpty().WithMessage("Is required");
+    }
+}
+
+
+internal class DeleteProductHandler(IDocumentSession session)
     : ICommandHandler<DeleteProductCommand, DeleteProductResult>
 {
     public async Task<DeleteProductResult> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
