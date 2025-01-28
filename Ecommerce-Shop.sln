@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{ACD6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CDD49D86-6C6E-469E-9CEB-1A67B5062B8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndpointTests", "tests\EndpointTests\EndpointTests.csproj", "{477CFE1C-0F12-48A2-AC89-DF50C2692BA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogServiceTests", "tests\EndpointTests\CatalogServiceTests.csproj", "{477CFE1C-0F12-48A2-AC89-DF50C2692BA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

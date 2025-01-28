@@ -1,4 +1,10 @@
+global using FluentAssertions;
 global using Xunit;
-global using System.Text.Json;
-global using System.Diagnostics;
-global using System.Text;
+global using Marten;
+global using Moq;
+global using Catalog.API.Exceptions;
+global using Catalog.API.Models;
+global using Catalog.API.Products.CreateProduct;
+global using Catalog.API.Products.DeleteProduct;
+global using Catalog.API.Products.GetProductById;
+global using Catalog.API.Products.UpdateProduct;
