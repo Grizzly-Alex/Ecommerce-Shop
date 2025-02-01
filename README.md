@@ -26,7 +26,6 @@ Don't forget about the DRY principle :)
 ![image](https://github.com/user-attachments/assets/1a29a9ec-9a35-413b-b5db-ffa21e032570)
 
 
-
 # Catalog Microservice
 This service is responsible for management products which store in the database. 
 These are the ordinary CRUD operations. Microservice works on http/https protocols with using REST architecture.
@@ -90,13 +89,11 @@ https://localhost:5050/swagger/index.html
    
 </details>
 
-
 ### Architecture
 API has got Vertical Slice Architecture. Organizes our code into feature folders, each feature encapsulated in a single .cs file.
 
-![image](https://github.com/user-attachments/assets/5a5ebbc2-1123-456e-81cf-baae8493e653) ![image](https://github.com/user-attachments/assets/3ab5b377-8f60-4151-9c7b-8370f7a650ff)
-
-
+![image](https://github.com/user-attachments/assets/5a5ebbc2-1123-456e-81cf-baae8493e653) 
+![image](https://github.com/user-attachments/assets/3ab5b377-8f60-4151-9c7b-8370f7a650ff)
 
 ### Underlying Data Structures
 The [PostgreSQL](https://www.postgresql.org/) database was chosen to store product data and the [Marten](https://martendb.io "site Marten") ORM was chosen to interact with it.
@@ -117,6 +114,20 @@ Every error is logged, such as input data validation errors.
 
 ![image](https://github.com/user-attachments/assets/13a7c1c8-c8a7-4cbf-b21e-ce002f96193c)
 ![image](https://github.com/user-attachments/assets/5b760116-bd83-4520-8bee-629f6291ced1)
+
+# Catalog Service Tests
+### Unit Tests
+For unit testing I have the following nugget packages:
+ - [xUnit](https://www.nuget.org/packages/xunit)
+ - [Moq](https://www.nuget.org/packages/Moq)
+ - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
+
+Marten pens were tested by simulating various situations such as successful operation or throwing exception if the product was not found in the database.
+Working with the database is simulated by mocking Marten.IDocumentSession.
+![image](https://github.com/user-attachments/assets/33581cd2-793f-4522-949e-04fc6bf49169)
+
+
+
 
 
 
