@@ -122,9 +122,21 @@ For unit testing I have the following nugget packages:
  - [Moq](https://www.nuget.org/packages/Moq)
  - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
 
-Marten pens were tested by simulating various situations such as successful operation or throwing exception if the product was not found in the database.
+Marten handlers were tested by simulating various situations such as successful operation or throwing exception if the product was not found in the database.
 Working with the database is simulated by mocking Marten.IDocumentSession.
-![image](https://github.com/user-attachments/assets/33581cd2-793f-4522-949e-04fc6bf49169)
+![image](https://github.com/user-attachments/assets/9c0906ec-efbe-46da-9cef-903a867d4dff)
+
+### Integration Tests
+For Integration testing I have the following nugget packages:
+ - [xUnit](https://www.nuget.org/packages/xunit)
+ - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
+ - [Testcontainers.PostgreSql](https://www.nuget.org/packages/Testcontainers.PostgreSql)
+ - [Microsoft.AspNetCore.Mvc.Testing](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Testing)
+
+![image](https://github.com/user-attachments/assets/a63f9388-9682-4692-bf16-38fdfda3c5bf)
+
+
+
 
 
 
