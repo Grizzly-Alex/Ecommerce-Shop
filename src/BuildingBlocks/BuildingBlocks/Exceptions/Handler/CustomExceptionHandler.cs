@@ -27,9 +27,11 @@ public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger)
 
         (problemDetails.Detail, problemDetails.Title, problemDetails.Status) = exception switch
         {
+            BadRequestException or 
+            BadHttpRequestException or 
+            ArgumentOutOfRangeException => (exception.Message, exception.GetType().Name, StatusCodes.Status400BadRequest),
             InternalServerException => (exception.Message, exception.GetType().Name, StatusCodes.Status500InternalServerError),
             ValidationException => (exception.Message, exception.GetType().Name, StatusCodes.Status422UnprocessableEntity),
-            BadRequestException => (exception.Message, exception.GetType().Name, StatusCodes.Status400BadRequest),
             NotFoundException => (exception.Message, exception.GetType().Name, StatusCodes.Status404NotFound),
             _ => (exception.Message, exception.GetType().Name, StatusCodes.Status500InternalServerError)
         };

@@ -19,7 +19,7 @@ public class CreateProductEndpoint : ICarterModule
             })
             .WithName("CreateProduct")
             .Produces<CreateProductResponse>(StatusCodes.Status201Created)
-            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status422UnprocessableEntity)
             .WithSummary("Create Product")
             .WithDescription("Create Product");
     }
