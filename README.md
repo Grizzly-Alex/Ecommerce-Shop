@@ -25,7 +25,9 @@ Implementing interaction between services via RabbitMQ message broker and using 
 ![EcommerceShop (Microservices)](https://github.com/user-attachments/assets/4a4138a6-8baa-44d9-9cef-b04e4540aaab)
 
 
-# <a id="buildingblocks-library">BuildingBlocks Library</a>
+# <a id="buildingblocks-library">BuildingBlocks Library</a> 
+
+[BuildingBlocks](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/src/BuildingBlocks/BuildingBlocks)
 
 This library contains code modules that will be reused by other services.
 This is where abstractions for CQRS, pipeline behaviors, exception handlers, etc. are collected.
@@ -35,6 +37,9 @@ Don't forget about the DRY principle :)
 
 
 # <a id="catalog-microservice">Catalog Microservice</a>
+
+[Catalog.API](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/src/Services/Catalog/Catalog.API)
+
 This service is responsible for management products which store in the database. 
 These are the ordinary CRUD operations. Microservice works on http/https protocols with using REST architecture.
 
