@@ -6,6 +6,12 @@ Why did I choose microservices for my project? Firstly, for educational purposes
 For each microservice will have its own architecture and its own database type. The services will use databases such as relational databases (PostgreSQL, Sql Server) and NoSQL(Redis, DocumentDb).
 Implementing interaction between services via RabbitMQ message broker and using the Yarp API Gateway.
 
+### Content:
+- [BuildingBlocks Library](#buildingblocks-library)
+- [Catalog Microservice](#catalog-microservice)
+- [Catalog Service Tests](#catalog-service-tests)
+
+
 ### Ports
 | Microservices | Local Environment  | Docker Environment  | Docker Inside  |
 | :-------------|:------------------:| :------------------:|:--------------:|
@@ -18,14 +24,17 @@ Implementing interaction between services via RabbitMQ message broker and using 
 
 ![EcommerceShop (Microservices)](https://github.com/user-attachments/assets/4a4138a6-8baa-44d9-9cef-b04e4540aaab)
 
-# BuildingBlocks Library
+
+# <a id="buildingblocks-library">BuildingBlocks Library</a>
+
 This library contains code modules that will be reused by other services.
 This is where abstractions for CQRS, pipeline behaviors, exception handlers, etc. are collected.
 Don't forget about the DRY principle :)
 
 ![image](https://github.com/user-attachments/assets/1a29a9ec-9a35-413b-b5db-ffa21e032570)
 
-# Catalog Microservice
+
+# <a id="catalog-microservice">Catalog Microservice</a>
 This service is responsible for management products which store in the database. 
 These are the ordinary CRUD operations. Microservice works on http/https protocols with using REST architecture.
 
@@ -115,7 +124,9 @@ Every error is logged, such as input data validation errors.
 ![image](https://github.com/user-attachments/assets/13a7c1c8-c8a7-4cbf-b21e-ce002f96193c)
 ![image](https://github.com/user-attachments/assets/5b760116-bd83-4520-8bee-629f6291ced1)
 
-# Catalog Service Tests
+
+# <a id="catalog-service-tests">Catalog Service Tests</a>
+
 ### Unit Tests
 For unit testing I have the following nugget packages:
  - [xUnit](https://www.nuget.org/packages/xunit)
