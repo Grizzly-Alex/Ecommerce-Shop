@@ -131,6 +131,8 @@ Every error is logged, such as input data validation errors.
 
 
 # <a id="catalog-service-tests">Catalog Service Tests</a>
+[CtalogServiceTests](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/tests/CtalogServiceTests)
+
 
 ### Unit Tests
 For unit testing I have the following nugget packages:
