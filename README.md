@@ -15,6 +15,7 @@ Implementing interaction between services via RabbitMQ message broker and using 
 | Ordering      | 5003 - 5053        | 6003                | 8080 - 8081    |
 
 ### Application Diagram
+
 ![EcommerceShop (Microservices)](https://github.com/user-attachments/assets/4a4138a6-8baa-44d9-9cef-b04e4540aaab)
 
 # BuildingBlocks Library
@@ -22,9 +23,7 @@ This library contains code modules that will be reused by other services.
 This is where abstractions for CQRS, pipeline behaviors, exception handlers, etc. are collected.
 Don't forget about the DRY principle :)
 
-
 ![image](https://github.com/user-attachments/assets/1a29a9ec-9a35-413b-b5db-ffa21e032570)
-
 
 # Catalog Microservice
 This service is responsible for management products which store in the database. 
@@ -37,6 +36,7 @@ These are the ordinary CRUD operations. Microservice works on http/https protoco
 | Database |                    | 5400                | 5432           |
 
 ### Requests 
+
 [postman export](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/feature/catalog.api/src/Services/Catalog/Postman)
 
 | Method  | Request URI                  | Description                    |
@@ -124,6 +124,7 @@ For unit testing I have the following nugget packages:
 
 Marten handlers were tested by simulating various situations such as successful operation or throwing exception if the product was not found in the database.
 Working with the database is simulated by mocking Marten.IDocumentSession.
+
 ![image](https://github.com/user-attachments/assets/9c0906ec-efbe-46da-9cef-903a867d4dff)
 
 ### Integration Tests
@@ -132,6 +133,12 @@ For Integration testing I have the following nugget packages:
  - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
  - [Testcontainers.PostgreSql](https://www.nuget.org/packages/Testcontainers.PostgreSql)
  - [Microsoft.AspNetCore.Mvc.Testing](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Testing)
+
+In time execution of integration tests, a database container is used for tests.
+The container life cycle is for the period of the test execution process.
+After the tests are executed, the container is deleted.
+
+Testing endpoints for expected status codes.
 
 ![image](https://github.com/user-attachments/assets/a63f9388-9682-4692-bf16-38fdfda3c5bf)
 
