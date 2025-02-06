@@ -1,7 +1,7 @@
 ﻿namespace Basket.API.Basket.GetBasket;
 
 public record GetbasketQuery(Guid UserId) : IQuery<GetBasketResult>;
-public record GetBasketResult(ShoppingCart ShoppingCart);
+public record GetBasketResult(ShoppingCart Cart);
 
 
 public class GetBasketHandler : IQueryHandler<GetbasketQuery, GetBasketResult>

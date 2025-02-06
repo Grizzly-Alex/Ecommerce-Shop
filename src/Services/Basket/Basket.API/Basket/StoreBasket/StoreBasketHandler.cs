@@ -1,7 +1,7 @@
 ﻿namespace Basket.API.Basket.StoreBasket;
 
 public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;
-public record StoreBasketResult(bool IsSuccess);
+public record StoreBasketResult(Guid UserId);
 
 public class StoreBasketCommandHandler : AbstractValidator<StoreBasketCommand>
 {
@@ -21,6 +21,6 @@ public class StoreBasketHandler : ICommandHandler<StoreBasketCommand, StoreBaske
         //TODO: store basket in database (use Marten upsert - if exist = update - if no exist = crete)
         //TODO: update cache
 
-        return new StoreBasketResult(true);
+        return new StoreBasketResult(command.Cart.UserId);
     }
 }
