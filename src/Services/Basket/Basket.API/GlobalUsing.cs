@@ -12,3 +12,5 @@ global using Basket.API.Exceptions;
 global using Basket.API.Date;
 global using BuildingBlocks.Exceptions.Handler;
 global using Weasel.Core;
+global using Microsoft.Extensions.Caching.Distributed;
+global using System.Text.Json;

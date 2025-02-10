@@ -44,6 +44,13 @@ builder.Services.AddMarten(opt =>
 }).UseLightweightSessions();
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+
+builder.Services.AddStackExchangeRedisCache(setup =>
+{
+    setup.Configuration = builder.Configuration.GetConnectionString("Cacher");
+    setup.InstanceName = "Basket";
+});
 #endregion
 
 var app = builder.Build();
