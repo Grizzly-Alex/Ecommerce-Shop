@@ -1,3 +1,5 @@
+using HealthChecks.UI.Client;
+
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
 var dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
@@ -51,6 +53,10 @@ builder.Services.AddStackExchangeRedisCache(setup =>
     setup.Configuration = builder.Configuration.GetConnectionString("Cacher");
     setup.InstanceName = "Basket";
 });
+
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("Cacher")!);
 #endregion
 
 var app = builder.Build();
@@ -62,6 +68,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseExceptionHandler();
+
+app.UseHealthChecks("/health", 
+    new HealthCheckOptions 
+    {   
+         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse         
+    });
 
 app.MapCarter();
 
