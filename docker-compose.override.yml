@@ -41,6 +41,12 @@ services:
     volumes:
       - ./.containers/basket_db:/var/lib/postgresql/data
 
+  basket.cache:
+    container_name: basket.cache
+    restart: always
+    ports:
+      - "6379:6379"
+
 
   catalog.api:
     container_name: catalog.api
