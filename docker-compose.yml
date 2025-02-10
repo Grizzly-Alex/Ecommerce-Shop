@@ -13,11 +13,18 @@ services:
   basket.cache:
     image: redis
 
+
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalog.api
     build:
       context: .
       dockerfile: src/Services/Catalog/Catalog.API/Dockerfile
+
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basket.api
+    build:
+      context: .
+      dockerfile: src/Services/Basket/Basket.API/Dockerfile
 
 
 volumes:
