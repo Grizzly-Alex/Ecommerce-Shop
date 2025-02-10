@@ -6,7 +6,7 @@ public class ProductNotFoundException : NotFoundException
     {
     }
 
-    public ProductNotFoundException(string category) : base("Product", $"with category {category}")
+    public ProductNotFoundException(string category) : base("Product", $"category {category}")
     {
     }
 }

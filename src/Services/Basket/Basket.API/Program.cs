@@ -1,9 +1,12 @@
-using Weasel.Core;
-
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
 var dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
 
+
+#region DI Container
+builder.Services
+    .AddExceptionHandler<CustomExceptionHandler>()
+    .AddProblemDetails();
 
 builder.Services.AddMediatR(cfg =>
 {
@@ -40,6 +43,8 @@ builder.Services.AddMarten(opt =>
     opt.Schema.For<ShoppingCart>().Identity(prop => prop.UserId);
 }).UseLightweightSessions();
 
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+#endregion
 
 var app = builder.Build();
 
@@ -48,6 +53,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler();
 
 app.MapCarter();
 
