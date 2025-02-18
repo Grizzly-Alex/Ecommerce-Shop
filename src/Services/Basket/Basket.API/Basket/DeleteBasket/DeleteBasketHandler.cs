@@ -20,6 +20,8 @@ public class DeleteBasketHandler(IBasketRepository repository) : ICommandHandler
     {
         bool isSuccess = await repository.DeleteBasket(command.UserId, cancellationToken);
 
-        return new DeleteBasketResult(isSuccess);
+        return isSuccess 
+            ? new DeleteBasketResult(isSuccess) 
+            : throw new BasketNotFoundException(command.UserId);
     }
 }

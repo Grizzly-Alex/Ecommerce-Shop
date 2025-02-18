@@ -1,8 +1,6 @@
-﻿using BuildingBlocks.Entities;
+﻿namespace Catalog.API.Models;
 
-namespace Catalog.API.Models;
-
-public sealed class Product : EntityDb<Guid>
+public sealed class Product : EntityId<Guid>
 {
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;

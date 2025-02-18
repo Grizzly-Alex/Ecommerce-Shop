@@ -1,11 +1,14 @@
-using HealthChecks.UI.Client;
+using Basket.API.Date;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
-var dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
+var dbSettings = builder.Configuration.GetRequiredSection(nameof(MongoDbSettings)).Get<MongoDbSettings>()!;
+var cacherSettings = builder.Configuration.GetRequiredSection(nameof(RedisSettings)).Get<RedisSettings>()!;
 
 
 #region DI Container
+builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection(nameof(MongoDbSettings)));
+
 builder.Services
     .AddExceptionHandler<CustomExceptionHandler>()
     .AddProblemDetails();
@@ -38,25 +41,20 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddCarter();
 
-builder.Services.AddMarten(opt =>
-{
-    opt.Connection(dbConnectionString);
-    opt.AutoCreateSchemaObjects = AutoCreate.CreateOrUpdate;
-    opt.Schema.For<ShoppingCart>().Identity(prop => prop.UserId);
-}).UseLightweightSessions();
-
+builder.Services.AddSingleton<IMongoClient>(new MongoClient(dbSettings.ConnectionString));
+builder.Services.AddScoped<IMongoDbContext<ShoppingCart>, BasketDbContext>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+//builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
 builder.Services.AddStackExchangeRedisCache(setup =>
 {
-    setup.Configuration = builder.Configuration.GetConnectionString("Cacher");
-    setup.InstanceName = "Basket";
+    setup.Configuration = cacherSettings.ConnectionString;
+    setup.InstanceName = cacherSettings.InstanceName;
 });
 
 builder.Services.AddHealthChecks()
-    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
-    .AddRedis(builder.Configuration.GetConnectionString("Cacher")!);
+    .AddMongoDb(dbSettings.ConnectionString)
+    .AddRedis(cacherSettings.ConnectionString);
 #endregion
 
 var app = builder.Build();

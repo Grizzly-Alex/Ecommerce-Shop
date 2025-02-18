@@ -26,20 +26,19 @@ services:
     ports:
       - "5400:5432"
     volumes:
-      - ./.containers/catalog_db:/var/lib/postgresql/data
+      - catalog_db:/var/lib/postgresql/data
    
   basket.database:
     container_name: basket.database
     environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=eshop_basket
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=mongo
+      - MONGO_INITDB_DATABASE=eshop_basket
     restart: always
     ports:
-      - "5401:5432"
+      - "5401:27017"
     volumes:
-      - ./.containers/basket_db:/var/lib/postgresql/data
+      - basket_db:/data/db
 
   basket.cache:
     container_name: basket.cache

@@ -1,20 +1,22 @@
-﻿namespace Basket.API.Date;
+﻿namespace Basket.API.Date.Repositories;
 
-public class CachedBasketRepository(IBasketRepository repository, IDistributedCache cache) 
+public class CachedBasketRepository(IBasketRepository repository, IDistributedCache cache)
     : IBasketRepository
 {
-    public async Task<ShoppingCart> GetBasket(Guid Id, CancellationToken token = default)
+    public async Task<ShoppingCart?> GetBasket(Guid Id, CancellationToken token = default)
     {
         string key = Id.ToString();
 
         var basketCache = await cache.GetStringAsync(key, token);
 
-        if(!string.IsNullOrEmpty(basketCache))
+        if (!string.IsNullOrEmpty(basketCache))
             return JsonSerializer.Deserialize<ShoppingCart>(basketCache)!;
 
-        var basket =  await repository.GetBasket(Id, token);
-        await cache.SetStringAsync(key, JsonSerializer.Serialize(basket), token);  
-        
+        var basket = await repository.GetBasket(Id, token);
+
+        if(basket is not null)        
+            await cache.SetStringAsync(key, JsonSerializer.Serialize(basket), token);
+               
         return basket;
     }
 
@@ -27,9 +29,11 @@ public class CachedBasketRepository(IBasketRepository repository, IDistributedCa
     }
 
     public async Task<bool> DeleteBasket(Guid Id, CancellationToken token = default)
-    {        
+    {
         await cache.RemoveAsync(Id.ToString(), token);
 
-        return await repository.DeleteBasket(Id, token);
+        var isSuccess = await repository.DeleteBasket(Id, token);
+
+        return isSuccess;
     }
 }
