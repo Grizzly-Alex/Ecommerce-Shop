@@ -1,7 +1,7 @@
 ﻿namespace Basket.API.Basket.GetBasket;
 
-public record ShoppingCart(Guid UserId, List<ShoppingCartItem> Items, decimal TotalPrice);
-public record GetBasketResponse(ShoppingCart Cart);
+public record UserCart(Guid UserId, List<ShoppingCartItem> Items, decimal TotalPrice);
+public record GetBasketResponse(UserCart Cart);
 
 public class GetBasketEndpoint : ICarterModule
 {
