@@ -1,6 +1,6 @@
 ﻿namespace Basket.API.Date.Repositories;
 
-public class CachedBasketRepository(IBasketRepository repository, IDistributedCache cache)
+internal class CachedBasketRepository(IBasketRepository repository, IDistributedCache cache)
     : IBasketRepository
 {
     public async Task<ShoppingCart?> GetBasket(Guid Id, CancellationToken token = default)

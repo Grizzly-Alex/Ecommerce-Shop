@@ -1,6 +1,6 @@
 ﻿namespace Basket.API.Exceptions;
 
-public class BasketNotFoundException : NotFoundException
+internal class BasketNotFoundException : NotFoundException
 {
     public BasketNotFoundException(Guid Id) : base("Basket", $"UserId {Id}")
     {
