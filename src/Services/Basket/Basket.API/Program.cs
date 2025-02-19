@@ -44,7 +44,7 @@ builder.Services.AddCarter();
 builder.Services.AddSingleton<IMongoClient>(new MongoClient(dbSettings.ConnectionString));
 builder.Services.AddScoped<IMongoDbContext<ShoppingCart>, BasketDbContext>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-//builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
 builder.Services.AddStackExchangeRedisCache(setup =>
 {
