@@ -28,4 +28,8 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+	<InternalsVisibleTo Include="BasketServiceTests" />
+  </ItemGroup>
+
 </Project>
