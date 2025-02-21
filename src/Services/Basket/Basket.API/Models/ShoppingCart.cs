@@ -3,6 +3,7 @@
 
 public class ShoppingCart : EntityId<ObjectId>
 {
+    [BsonGuidRepresentation(GuidRepresentation.Standard)]
     public Guid UserId { get; set; }
     public List<ShoppingCartItem> Items { get; set; } = [];
 
