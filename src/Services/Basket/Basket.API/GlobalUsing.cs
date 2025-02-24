@@ -20,4 +20,4 @@ global using Microsoft.EntityFrameworkCore;
 global using Basket.API.Date.Settings;
 global using Microsoft.Extensions.Options;
 global using MongoDB.Bson.Serialization.Attributes;
-global using BuildingBlocks.Entity;
+global using FluentValidation.Results;

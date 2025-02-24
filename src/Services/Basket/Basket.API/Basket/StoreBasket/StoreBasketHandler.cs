@@ -7,8 +7,17 @@ public class StoreBasketCommandHandler : AbstractValidator<StoreBasketCommand>
 {
     public StoreBasketCommandHandler()
     {
-        RuleFor(x => x.Cart).NotNull().WithMessage("Cart can not be null");
-        RuleFor(x => x.Cart.UserId).NotEmpty().WithMessage("UserId is required");        
+        RuleFor(x => x.Cart.UserId).NotEmpty().WithMessage("UserId is required");  
+    }
+
+    protected override bool PreValidate(ValidationContext<StoreBasketCommand> context, ValidationResult result)
+    {
+        if(context.InstanceToValidate.Cart is null)
+        {
+            result.Errors.Add(new ValidationFailure("Cart", "Cart can not be null"));
+            return false;
+        }
+        return true;
     }
 }
 

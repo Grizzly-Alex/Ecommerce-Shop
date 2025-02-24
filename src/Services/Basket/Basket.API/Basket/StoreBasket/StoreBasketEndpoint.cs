@@ -18,7 +18,6 @@ public class StoreBasketEndpoint : ICarterModule
         .WithName("StoreBasket")
         .Produces<StoreBasketResponse>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status422UnprocessableEntity)
-        .ProducesProblem(StatusCodes.Status404NotFound)
         .WithSummary("Store Basket")
         .WithDescription("Store Basket");
     }
