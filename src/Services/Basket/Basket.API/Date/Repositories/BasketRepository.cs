@@ -31,8 +31,8 @@ internal class BasketRepository(IMongoDbContext<ShoppingCart> context) : IBasket
     {
         var filterDefinition = Builders<ShoppingCart>.Filter.Eq(x => x.UserId, id);
 
-        var result = await context.collection.FindOneAndDeleteAsync(filterDefinition, null, token);
+        var result = await context.collection.DeleteOneAsync(filterDefinition, null, token);
 
-        return result is not null;
+        return result.DeletedCount != 0;
     }
 }

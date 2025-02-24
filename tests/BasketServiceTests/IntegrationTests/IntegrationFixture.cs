@@ -39,7 +39,7 @@ public class MockApp : WebApplicationFactory<Program>
             cfg.Configure<IMongoClient>(opt => 
                 opt.GetDatabase("db").GetCollection<ShoppingCart>("baskets"));
 
-            cfg.AddScoped<IBasketRepository, BasketRepository>();
+            cfg.AddScoped<IBasketRepository, BasketRepository>();           
         });
     }
 }

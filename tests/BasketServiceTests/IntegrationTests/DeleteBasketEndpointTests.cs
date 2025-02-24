@@ -1,9 +1,9 @@
 ﻿namespace BasketServiceTests.IntegrationTests;
 
-public class GetBasketEndpointTests(IntegrationFixture integrationFicture) : IntegrationTest(integrationFicture)
+public class DeleteBasketEndpointTests(IntegrationFixture integrationFixture) : IntegrationTest(integrationFixture)
 {
     [Fact]
-    public async Task GetBasket_ReturnStatusCode200_WhenBasketIsFound()
+    public async Task DeleteBasket_ReturnStatusCode200_WhenBasketIsFound()
     {
         // Arrange
         var basket = new ShoppingCart(Guid.NewGuid());
@@ -12,25 +12,25 @@ public class GetBasketEndpointTests(IntegrationFixture integrationFicture) : Int
         var result = await handler.Handle(command, CancellationToken.None);
         var uri = new Uri($"https://localhost/basket/{result.UserId}");
 
-        // Act
-        var response = await Client.GetAsync(uri, CancellationToken.None);
+        //Act
+        var response = await Client.DeleteAsync(uri, CancellationToken.None);
 
-        // Assert
+        //Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
 
     [Fact]
-    public async Task GetBasket_ReturnStatusCode404_WhenBasketIsNotFound()
+    public async Task DeleteBasket_ReturnStatusCode404_WhenBasketIsNotFound()
     {
         // Arrange
         var userId = Guid.NewGuid();
         var uri = new Uri($"https://localhost/basket/{userId}");
 
-        // Act
-        var response = await Client.GetAsync(uri, CancellationToken.None);
+        //Act
+        var response = await Client.DeleteAsync(uri, CancellationToken.None);
 
-        // Assert
+        //Assert
         response.IsSuccessStatusCode.Should().BeFalse();
 
         var strBodyContent = await response.Content.ReadAsStringAsync();
@@ -41,16 +41,16 @@ public class GetBasketEndpointTests(IntegrationFixture integrationFicture) : Int
 
 
     [Fact]
-    public async Task GetBasket_ReturnStatusCode400_WhenProvideIncorrectData()
+    public async Task DeleteBasket_ReturnStatusCode400_WhenProvideIncorrectData()
     {
         // Arrange
         var nonvalidId = Guid.NewGuid().ToString().Replace('-', '?');
         var uri = new Uri($"https://localhost/basket/{nonvalidId}");
 
-        // Act
-        var response = await Client.GetAsync(uri, CancellationToken.None);
+        //Act
+        var response = await Client.DeleteAsync(uri, CancellationToken.None);
 
-        // Assert
+        //Assert
         response.IsSuccessStatusCode.Should().BeFalse();
 
         var strBodyContent = await response.Content.ReadAsStringAsync();
