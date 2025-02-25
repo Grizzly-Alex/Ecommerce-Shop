@@ -10,6 +10,7 @@ Implementing interaction between services via RabbitMQ message broker and using 
 - [BuildingBlocks Library](#buildingblocks-library)
 - [Catalog Microservice](#catalog-microservice)
 - [Catalog Service Tests](#catalog-service-tests)
+- [Basket Microservice](#basket-microservice)
 
 
 ### Ports
@@ -22,8 +23,7 @@ Implementing interaction between services via RabbitMQ message broker and using 
 
 ### Application Diagram
 
-![EcommerceShop (Microservices)](https://github.com/user-attachments/assets/4a4138a6-8baa-44d9-9cef-b04e4540aaab)
-
+![EcommerceShop (Microservices)](https://github.com/user-attachments/assets/a4c4ceec-0c0a-4422-a62f-0054dacd98d3)
 
 # <a id="buildingblocks-library">BuildingBlocks Library</a> 
 
@@ -51,7 +51,7 @@ These are the ordinary CRUD operations. Microservice works on http/https protoco
 
 ### Requests 
 
-[postman export](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/feature/catalog.api/src/Services/Catalog/Postman)
+[postman export](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/postman)
 
 | Method  | Request URI                  | Description                    |
 | :-------|:-----------------------------| :------------------------------|
@@ -128,6 +128,58 @@ Every error is logged, such as input data validation errors.
 
 ![image](https://github.com/user-attachments/assets/13a7c1c8-c8a7-4cbf-b21e-ce002f96193c)
 ![image](https://github.com/user-attachments/assets/5b760116-bd83-4520-8bee-629f6291ced1)
+
+
+
+
+
+
+# <a id="basket-microservice">Basket Microservice</a>
+[Basket.API](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/src/Services/Basket/Basket.API)
+
+This service is responsible for storing user baskets. Microservice works on http/https protocols with using REST architecture.
+The API interacts with the NoSQL MongoDb database and Redis for caching.
+
+### Ports
+| Services | Local Environment  | Docker Environment  | Docker Inside  |
+| :--------|:------------------:| :------------------:|:--------------:|
+| API      | 5001 - 5051        | 6001                | 8080 - 8081    |
+| Database |                    | 5401                | 27017          |
+| Cacher   |                    | 6379                | 6379           |
+
+### Requests 
+
+[postman export](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/postman)
+
+| Method  | Request URI               | Description                    |
+| :-------|:--------------------------| :------------------------------|
+| GET     | /health                   | Checking Database availability |
+| GET     | /basket/{userId}          | Get a basket for user          |
+| POST    | /basket                   | Create or Update a basket      |
+| DELETE  | /basket/{userId}          | Remove a basket                | 
+
+
+### Examples Of Queries 
+https://localhost:5051/swagger/index.html
+
+<details><summary>Store basket</summary>
+  
+   ![image](https://github.com/user-attachments/assets/8225448e-423f-407a-abb0-f61637943654)
+   
+</details>
+
+<details><summary>Get basket</summary>
+  
+   ![image](https://github.com/user-attachments/assets/50f00dc2-46ca-4be1-9e72-dda8781370a5)
+   
+</details>
+
+<details><summary>Delete basket</summary>
+  
+   ![image](https://github.com/user-attachments/assets/33e7574a-0a43-4407-bda7-a6e2dba90575)
+   
+</details>
+
 
 
 # <a id="catalog-service-tests">Catalog Service Tests</a>
