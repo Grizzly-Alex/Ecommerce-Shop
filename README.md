@@ -181,6 +181,29 @@ https://localhost:5051/swagger/index.html
 </details>
 
 
+### Architecture
+API has got Vertical Slice Architecture. Organizes our code into feature folders, each feature encapsulated in a single .cs file.
+
+![image](https://github.com/user-attachments/assets/5a5ebbc2-1123-456e-81cf-baae8493e653) 
+![image](https://github.com/user-attachments/assets/3d453789-0c26-4fb8-a870-e840a9e109fd)
+
+
+### Underlying Data Structures
+The [MongoDb](https://www.mongodb.com/) database was chosen to store baskets. Interaction with the database occurs using [MongoDB.Driver](https://www.nuget.org/packages/mongodb.driver) ORM.
+[Redis](https://redis.io/) is responsible for data caching. Interaction with the cache and database occurs using the BasketRepository and CachedBasketRepository repositories, which implement the IBasketRepository interface.
+Registration of CachedBasketRepository is done using the Decorate method, this is an extension method for IServiceCollection. 
+
+![image](https://github.com/user-attachments/assets/d1c10429-b351-48ce-a557-a1bc4dd2cb33)
+
+### CQRS
+Just like with the catalog api, I used CQRS to keep the code more clean and used for this a MediatR [nuget](https://www.nuget.org/packages/mediatr/ "MediatR nuget package"). 
+This provides low coupling with the endpoints and allows you to write cleaner, more understandable code.
+Low code coupling is also ensured by using the IPipelineBehavior generic interface for validations and logging. 
+
+
+
+
+
 
 # <a id="catalog-service-tests">Catalog Service Tests</a>
 [CtalogServiceTests](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/tests/CtalogServiceTests)
