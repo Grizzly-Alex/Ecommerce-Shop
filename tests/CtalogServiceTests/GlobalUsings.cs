@@ -16,6 +16,5 @@ global using Catalog.API.Products.CreateProduct;
 global using Catalog.API.Products.DeleteProduct;
 global using Catalog.API.Products.GetProductById;
 global using Catalog.API.Products.UpdateProduct;
-global using BuildingBlocks.CQRS;
 global using Microsoft.Extensions.DependencyInjection;
 global using MediatR;

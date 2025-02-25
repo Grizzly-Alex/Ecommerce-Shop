@@ -76,3 +76,6 @@ app.UseHealthChecks("/health",
 app.MapCarter();
 
 app.Run();
+
+
+public partial class Program { } // Expose access for use with WebApplicationFactory<T>

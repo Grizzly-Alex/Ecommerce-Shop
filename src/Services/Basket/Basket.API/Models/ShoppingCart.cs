@@ -1,9 +1,12 @@
 ﻿namespace Basket.API.Models;
 
 
-public class ShoppingCart : EntityId<ObjectId>
+public sealed class ShoppingCart
 {
+    [BsonId]
+    [BsonGuidRepresentation(GuidRepresentation.Standard)]
     public Guid UserId { get; set; }
+
     public List<ShoppingCartItem> Items { get; set; } = [];
 
     [BsonRepresentation(BsonType.Decimal128)]
@@ -17,6 +20,6 @@ public class ShoppingCart : EntityId<ObjectId>
 
     public ShoppingCart()
     {
-      
+        
     }
 }
