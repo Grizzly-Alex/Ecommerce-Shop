@@ -3,6 +3,7 @@
 public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;
 public record StoreBasketResult(Guid UserId);
 
+
 public class StoreBasketCommandHandler : AbstractValidator<StoreBasketCommand>
 {
     public StoreBasketCommandHandler()

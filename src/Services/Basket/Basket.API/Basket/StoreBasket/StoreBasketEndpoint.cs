@@ -3,6 +3,7 @@
 public record StoreBasketRequest(ShoppingCart Cart);
 public record StoreBasketResponse(Guid UserId);
 
+
 public class StoreBasketEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
