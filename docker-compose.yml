@@ -1,11 +1,18 @@
-version: '3.4'
 
 services:
+  pgadmin:
+    image: dpage/pgadmin4
+
+
   catalog.database:
     image: postgres
 
-  pgadmin:
-    image: dpage/pgadmin4
+  basket.database:
+    image: mongo
+
+  basket.cache:
+    image: redis
+
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalog.api
@@ -13,5 +20,13 @@ services:
       context: .
       dockerfile: src/Services/Catalog/Catalog.API/Dockerfile
 
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basket.api
+    build:
+      context: .
+      dockerfile: src/Services/Basket/Basket.API/Dockerfile
+
+
 volumes:
-  postgres_catalog:
+  catalog_db:
+  basket_db:

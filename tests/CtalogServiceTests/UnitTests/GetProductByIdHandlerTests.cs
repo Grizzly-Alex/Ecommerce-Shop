@@ -52,6 +52,6 @@ public class GetProductByIdHandlerTests
 
         //Assert
         var exception = await Assert.ThrowsAsync<ProductNotFoundException>(act);
-        Assert.Equal($"Entity \"Product\" with id {query.Id} was not found.", exception.Message);
+        Assert.Equal($"Entity Product with id {query.Id} was not found.", exception.Message);
     }
 }

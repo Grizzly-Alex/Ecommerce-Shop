@@ -2,6 +2,19 @@ version: '3.4'
 
 services:
 
+  pgadmin:
+    container_name: pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    restart: always
+    ports:
+      - "5450:80"
+    depends_on:
+      - catalog.database
+      - basket.database
+
+
   catalog.database:
     container_name: catalog.database
     environment:
@@ -13,19 +26,27 @@ services:
     ports:
       - "5400:5432"
     volumes:
-      - ./.containers/catalog-db:/var/lib/postgresql/data
-
-  pgadmin:
-    container_name: pgadmin4
+      - catalog_db:/var/lib/postgresql/data
+   
+  basket.database:
+    container_name: basket.database
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=root
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=mongo
+      - MONGO_INITDB_DATABASE=eshop_basket
     restart: always
     ports:
-      - "5450:80"
-    depends_on:
-      - catalog.database
-     
+      - "5401:27017"
+    volumes:
+      - basket_db:/data/db
+
+  basket.cache:
+    container_name: basket.cache
+    restart: always
+    ports:
+      - "6379:6379"
+
+
   catalog.api:
     container_name: catalog.api
     environment:
@@ -39,4 +60,19 @@ services:
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
     depends_on:
       - catalog.database
-  
+
+  basket.api:
+    container_name: basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - MongoDbSettings__ConnectionString=mongodb://mongo:mongo@basket.database:27017
+      - RedisSettings__ConnectionString=basket.cache:6379
+    ports:
+      - "6001:8080"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      - basket.database
+      - basket.cache

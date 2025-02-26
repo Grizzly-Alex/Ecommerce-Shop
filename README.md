@@ -10,6 +10,8 @@ Implementing interaction between services via RabbitMQ message broker and using 
 - [BuildingBlocks Library](#buildingblocks-library)
 - [Catalog Microservice](#catalog-microservice)
 - [Catalog Service Tests](#catalog-service-tests)
+- [Basket Microservice](#basket-microservice)
+- [Basket Service Tests](#basket-service-tests)
 
 
 ### Ports
@@ -22,8 +24,7 @@ Implementing interaction between services via RabbitMQ message broker and using 
 
 ### Application Diagram
 
-![EcommerceShop (Microservices)](https://github.com/user-attachments/assets/4a4138a6-8baa-44d9-9cef-b04e4540aaab)
-
+![EcommerceShop (Microservices)](https://github.com/user-attachments/assets/a4c4ceec-0c0a-4422-a62f-0054dacd98d3)
 
 # <a id="buildingblocks-library">BuildingBlocks Library</a> 
 
@@ -51,7 +52,7 @@ These are the ordinary CRUD operations. Microservice works on http/https protoco
 
 ### Requests 
 
-[postman export](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/feature/catalog.api/src/Services/Catalog/Postman)
+[postman export](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/postman)
 
 | Method  | Request URI                  | Description                    |
 | :-------|:-----------------------------| :------------------------------|
@@ -130,6 +131,7 @@ Every error is logged, such as input data validation errors.
 ![image](https://github.com/user-attachments/assets/5b760116-bd83-4520-8bee-629f6291ced1)
 
 
+
 # <a id="catalog-service-tests">Catalog Service Tests</a>
 [CtalogServiceTests](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/tests/CtalogServiceTests)
 
@@ -140,7 +142,7 @@ For unit testing I have the following nugget packages:
  - [Moq](https://www.nuget.org/packages/Moq)
  - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
 
-Marten handlers were tested by simulating various situations such as successful operation or throwing exception if the product was not found in the database.
+Handlers were tested by simulating various situations such as successful operation or throwing exception if the product was not found in the database.
 Working with the database is simulated by mocking Marten.IDocumentSession.
 
 ![image](https://github.com/user-attachments/assets/9c0906ec-efbe-46da-9cef-903a867d4dff)
@@ -161,8 +163,108 @@ Testing endpoints for expected status codes.
 ![image](https://github.com/user-attachments/assets/a63f9388-9682-4692-bf16-38fdfda3c5bf)
 
 
+# <a id="basket-microservice">Basket Microservice</a>
+[Basket.API](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/src/Services/Basket/Basket.API)
+
+This service is responsible for storing user baskets. Microservice works on http/https protocols with using REST architecture.
+The API interacts with the NoSQL MongoDb database and Redis for caching.
+
+### Ports
+| Services | Local Environment  | Docker Environment  | Docker Inside  |
+| :--------|:------------------:| :------------------:|:--------------:|
+| API      | 5001 - 5051        | 6001                | 8080 - 8081    |
+| Database |                    | 5401                | 27017          |
+| Cacher   |                    | 6379                | 6379           |
+
+### Requests 
+
+[postman export](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/postman)
+
+| Method  | Request URI               | Description                    |
+| :-------|:--------------------------| :------------------------------|
+| GET     | /health                   | Checking Database availability |
+| GET     | /basket/{userId}          | Get a basket for user          |
+| POST    | /basket                   | Create or Update a basket      |
+| DELETE  | /basket/{userId}          | Remove a basket                | 
 
 
+### Examples Of Queries 
+https://localhost:5051/swagger/index.html
+
+<details><summary>Store basket</summary>
+  
+   ![image](https://github.com/user-attachments/assets/8225448e-423f-407a-abb0-f61637943654)
+   
+</details>
+
+<details><summary>Get basket</summary>
+  
+   ![image](https://github.com/user-attachments/assets/50f00dc2-46ca-4be1-9e72-dda8781370a5)
+   
+</details>
+
+<details><summary>Delete basket</summary>
+  
+   ![image](https://github.com/user-attachments/assets/33e7574a-0a43-4407-bda7-a6e2dba90575)
+   
+</details>
+
+
+### Architecture
+API has got Vertical Slice Architecture. Organizes our code into feature folders, each feature encapsulated in a single .cs file.
+
+![image](https://github.com/user-attachments/assets/5a5ebbc2-1123-456e-81cf-baae8493e653) 
+![image](https://github.com/user-attachments/assets/3d453789-0c26-4fb8-a870-e840a9e109fd)
+
+
+### Underlying Data Structures
+The [MongoDb](https://www.mongodb.com/) database was chosen to store baskets. Interaction with the database occurs using [MongoDB.Driver](https://www.nuget.org/packages/mongodb.driver) ORM.
+[Redis](https://redis.io/) is responsible for data caching. Interaction with the cache and database occurs using the BasketRepository and CachedBasketRepository repositories, which implement the IBasketRepository interface.
+Registration of CachedBasketRepository is done using the Decorate method, this is an extension method for IServiceCollection. 
+
+![image](https://github.com/user-attachments/assets/d1c10429-b351-48ce-a557-a1bc4dd2cb33)
+
+### CQRS
+Just like with the catalog api, I used CQRS to keep the code more clean and used for this a MediatR [nuget](https://www.nuget.org/packages/mediatr/ "MediatR nuget package"). 
+This provides low coupling with the endpoints and allows you to write cleaner, more understandable code.
+Low code coupling is also ensured by using the IPipelineBehavior generic interface for validations and logging. 
+
+![image](https://github.com/user-attachments/assets/e6b8a6dc-6285-4c46-93f9-b92714d438cf)
+
+
+
+
+
+# <a id="catalog-service-tests">Basket Service Tests</a>
+[BasketServiceTests](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/tests/BasketServiceTests)
+
+### Unit Tests
+For unit testing I have the following nugget packages:
+ - [xUnit](https://www.nuget.org/packages/xunit)
+ - [Moq](https://www.nuget.org/packages/Moq)
+ - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
+
+Handlers were tested by simulating various situations such as successful operation or throwing exception if the basket was not found.
+Working with the database is simulated by mocking IBasketRepository
+
+![image](https://github.com/user-attachments/assets/7eab2800-053b-4e2a-bf75-90334b09abd0)
+
+### Integration Tests
+For Integration testing I have the following nugget packages:
+ - [xUnit](https://www.nuget.org/packages/xunit)
+ - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
+ - [Microsoft.AspNetCore.Mvc.Testing](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Testing)
+ - [Mongo2Go](https://www.nuget.org/packages/Mongo2Go/)
+
+With each call of the static method MongoDbRunner.Start() a new MongoDB instance will be set up. 
+A free port will be used (starting with port 27018) and a corresponding data directory will be created. 
+The method returns an instance of MongoDbRunner, which implements IDisposable. 
+As soon as the MongoDbRunner is disposed (or if the Finalizer is called by the GC), the wrapped MongoDB process will be killed and all data in the data directory will be deleted.
+[Mongo2Go README.md](https://github.com/Mongo2Go/Mongo2Go/blob/main/README.md)
+
+Testing endpoints for expected status codes.
+
+![image](https://github.com/user-attachments/assets/3cb64d9e-f112-4ed9-9bce-dc6953e737a7)
 
 
 
