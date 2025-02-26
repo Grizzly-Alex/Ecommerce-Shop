@@ -229,6 +229,7 @@ Just like with the catalog api, I used CQRS to keep the code more clean and used
 This provides low coupling with the endpoints and allows you to write cleaner, more understandable code.
 Low code coupling is also ensured by using the IPipelineBehavior generic interface for validations and logging. 
 
+![image](https://github.com/user-attachments/assets/e6b8a6dc-6285-4c46-93f9-b92714d438cf)
 
 
 
