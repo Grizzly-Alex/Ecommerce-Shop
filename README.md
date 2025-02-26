@@ -11,6 +11,7 @@ Implementing interaction between services via RabbitMQ message broker and using 
 - [Catalog Microservice](#catalog-microservice)
 - [Catalog Service Tests](#catalog-service-tests)
 - [Basket Microservice](#basket-microservice)
+- [Basket Service Tests](#basket-service-tests)
 
 
 ### Ports
@@ -131,7 +132,35 @@ Every error is logged, such as input data validation errors.
 
 
 
+# <a id="catalog-service-tests">Catalog Service Tests</a>
+[CtalogServiceTests](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/tests/CtalogServiceTests)
 
+
+### Unit Tests
+For unit testing I have the following nugget packages:
+ - [xUnit](https://www.nuget.org/packages/xunit)
+ - [Moq](https://www.nuget.org/packages/Moq)
+ - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
+
+Handlers were tested by simulating various situations such as successful operation or throwing exception if the product was not found in the database.
+Working with the database is simulated by mocking Marten.IDocumentSession.
+
+![image](https://github.com/user-attachments/assets/9c0906ec-efbe-46da-9cef-903a867d4dff)
+
+### Integration Tests
+For Integration testing I have the following nugget packages:
+ - [xUnit](https://www.nuget.org/packages/xunit)
+ - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
+ - [Testcontainers.PostgreSql](https://www.nuget.org/packages/Testcontainers.PostgreSql)
+ - [Microsoft.AspNetCore.Mvc.Testing](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Testing)
+
+In time execution of integration tests, a database container is used for tests.
+The container life cycle is for the period of the test execution process.
+After the tests are executed, the container is deleted.
+
+Testing endpoints for expected status codes.
+
+![image](https://github.com/user-attachments/assets/a63f9388-9682-4692-bf16-38fdfda3c5bf)
 
 
 # <a id="basket-microservice">Basket Microservice</a>
@@ -205,9 +234,8 @@ Low code coupling is also ensured by using the IPipelineBehavior generic interfa
 
 
 
-# <a id="catalog-service-tests">Catalog Service Tests</a>
-[CtalogServiceTests](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/tests/CtalogServiceTests)
-
+# <a id="catalog-service-tests">Basket Service Tests</a>
+[BasketServiceTests](https://github.com/Grizzly-Alex/Ecommerce-Shop/tree/main/tests/BasketServiceTests)
 
 ### Unit Tests
 For unit testing I have the following nugget packages:
@@ -215,29 +243,27 @@ For unit testing I have the following nugget packages:
  - [Moq](https://www.nuget.org/packages/Moq)
  - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
 
-Marten handlers were tested by simulating various situations such as successful operation or throwing exception if the product was not found in the database.
-Working with the database is simulated by mocking Marten.IDocumentSession.
+Handlers were tested by simulating various situations such as successful operation or throwing exception if the basket was not found.
+Working with the database is simulated by mocking IBasketRepository
 
-![image](https://github.com/user-attachments/assets/9c0906ec-efbe-46da-9cef-903a867d4dff)
+![image](https://github.com/user-attachments/assets/7eab2800-053b-4e2a-bf75-90334b09abd0)
 
 ### Integration Tests
 For Integration testing I have the following nugget packages:
  - [xUnit](https://www.nuget.org/packages/xunit)
  - [FluentAssertions](https://www.nuget.org/packages/FluentAssertions.AspNetCore.Mvc)
- - [Testcontainers.PostgreSql](https://www.nuget.org/packages/Testcontainers.PostgreSql)
  - [Microsoft.AspNetCore.Mvc.Testing](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Testing)
+ - [Mongo2Go](https://www.nuget.org/packages/Mongo2Go/)
 
-In time execution of integration tests, a database container is used for tests.
-The container life cycle is for the period of the test execution process.
-After the tests are executed, the container is deleted.
+With each call of the static method MongoDbRunner.Start() a new MongoDB instance will be set up. 
+A free port will be used (starting with port 27018) and a corresponding data directory will be created. 
+The method returns an instance of MongoDbRunner, which implements IDisposable. 
+As soon as the MongoDbRunner is disposed (or if the Finalizer is called by the GC), the wrapped MongoDB process will be killed and all data in the data directory will be deleted.
+[Mongo2Go README.md](https://github.com/Mongo2Go/Mongo2Go/blob/main/README.md)
 
 Testing endpoints for expected status codes.
 
-![image](https://github.com/user-attachments/assets/a63f9388-9682-4692-bf16-38fdfda3c5bf)
-
-
-
-
+![image](https://github.com/user-attachments/assets/3cb64d9e-f112-4ed9-9bce-dc6953e737a7)
 
 
 
